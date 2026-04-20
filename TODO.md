@@ -1,1 +1,3 @@
-Create a detailed planning that state to enhance the design of this current project. Follow the rules and logic on how senior developer and designer implement this features, add parallax using the background image in public/background-picture.jpeg, add animations and transitions, add hover effect, add modern icons, and many more. Just make sure that use the current theme.
+Change the parallax effect. Make the hero section empty content (show only the image) but when the user scroll animate a parallax effect (Follow the rules and logic on how senior developer and designer implement that).
+
+The background image is only in hero section  on which the parallax happned.

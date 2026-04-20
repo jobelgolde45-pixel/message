@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { 
   Heart, 
   Mail, 
@@ -125,11 +125,6 @@ export default function Home() {
   const [currentMessage, setCurrentMessage] = useState<string>('intro');
   const [messageClass, setMessageClass] = useState<string>('');
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const showMessage = (name: string) => {
     setIsAnimating(true);
@@ -158,42 +153,24 @@ Sana makita ko po ulit kayo.`);
     return messages[currentMessage] || 'Message not found.';
   };
 
-  if (!mounted) {
-    return null;
-  }
-
   return (
     <main>
-      <div className="parallax-bg" />
-      <div className="parallax-overlay" />
-      
-      <div className="hearts-container">
-        {[...Array(8)].map((_, i) => (
-          <Heart
-            key={i}
-            className="floating-heart"
-            size={24 + (i % 3) * 12}
-            fill="currentColor"
-            style={{ left: `${(i * 12) + 5}%` }}
-          />
-        ))}
-      </div>
+      <section className="hero">
+        <div className="hero-bg" />
+        <div className="hero-overlay" />
+        <div className="hero-text">
+          <h1>Collection Fam</h1>
+        </div>
+      </section>
+      <div style={{ height: '100vh' }} />
 
-      <header>
-        <h1>Collection Fam</h1>
-        <p>Tap your name to read my message</p>
-      </header>
-
-      <audio 
-        ref={(el) => el && el.play().catch(() => {})} 
-        loop 
-        autoPlay 
-        playsInline
-        preload="auto"
-        style={{ display: 'none' }}
-      >
-        <source src="/background-music.mp4" type="audio/mpeg" />
-      </audio>
+      <div className="main-content">
+        <audio id="bg-music" loop autoPlay playsInline preload="auto" hidden />
+        
+        <header>
+          <h1>Collection Fam</h1>
+          <p>Tap your name to read my message</p>
+        </header>
 
       <section 
         id="output" 
@@ -217,6 +194,7 @@ Sana makita ko po ulit kayo.`);
       <footer>
         Made with love by Cathlyne
       </footer>
+      </div>
     </main>
   );
 }
