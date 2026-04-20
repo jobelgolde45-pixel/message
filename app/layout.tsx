@@ -13,6 +13,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
+      <head>
+        <link 
+          rel="preload" 
+          href="/background-picture.jpeg" 
+          as="image" 
+        />
+      </head>
       <body className="min-h-full">{children}</body>
     </html>
   );

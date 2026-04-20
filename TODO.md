@@ -1,1 +1,1 @@
-Mimic the design, text, theme, font, etc. in old.html and place it as a main page of this project. use also the background-music.mp4 as a  background music.
+Create a detailed planning that state to enhance the design of this current project. Follow the rules and logic on how senior developer and designer implement this features, add parallax using the background image in public/background-picture.jpeg, add animations and transitions, add hover effect, add modern icons, and many more. Just make sure that use the current theme.

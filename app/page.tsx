@@ -1,6 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { 
+  Heart, 
+  Mail, 
+  Send, 
+  Sparkles, 
+  User, 
+  Users,
+  ArrowRight,
+  Star,
+  Music
+} from 'lucide-react';
 
 const messages: Record<string, string> = {
   intro: `From: Cathlyne
@@ -24,7 +35,7 @@ Thank you so much po for everything, Ma'am and Sir, and to all the staff. I will
 
   nor: `Ma'am Nor
 
-Ma-mi-miss ko pong marinig yung tawa mo Ma'am Nor, at pagiging mabait sa amin ni Kenneth simula nung una pa lang. Napaka-understanding mo din po Ma’am. Nung ngka mali po ako lalo na sa mga envelope, yung dapat ₱35, ginawa ko po pinadikitan ko Ng tig-iisa na hindi naman exact ₱35 HAHAHA. Thank you Ma’am dahil di mo po ako pinagalitan, bagkus tinuruan mo po ako ng tama, Super ma-mi-miss kita Ma’am Nor, you're the supervisor that I won't forget forever kahit konti lang po interaction natin huhu, sorry po mahiyain ako.🥺 I love you, Ma'am Nor!`,
+Ma-mi-miss ko pong marinig yung tawa mo Ma'am Nor, at pagiging mabait sa amin ni Kenneth simula nung una pa lang. Napaka-understanding mo din po Ma'am. Nung ngka mali po ako lalo na sa mga envelope, yung dapat ₱35, ginawa ko po pinadikitan ko Ng tig-iisa na hindi naman exact ₱35 HAHAHA. Thank you Ma'am dahil di mo po ako pinagalitan, bagkus tinuruan mo po ako ng tama, Super ma-mi-miss kita Ma'am Nor, you're the supervisor that I won't forget forever kahit konti lang po interaction natin huhu, sorry po mahiyain ako.🥺 I love you, Ma'am Nor!`,
 
   sirK: `Sir K.
 
@@ -36,11 +47,11 @@ Ma-mi-miss ko po ang kwentuhan natin sa counter ng cashier. pag na pasok po Ako 
 
   rico: `Sir Rico
 
-Ma-mi-miss ko po ang pwesto mo na parang akin na talaga yun HAHA. Nung nagpaalam po ako gamitin yung PC mo, laging okay po sa’yo. Sabi mo pa po kahit di na ako magpaalam. Sayang, need na palitan yung password na unang kong pinalit, maaalala mo sana ako dun sir HAHAHA. (Gardenia.DCream@2026) 😂 Salamat din po sa generosity mo po sa akin, iba ka sir Rico (Alrightttttt).`,
+Ma-mi-miss ko po ang pwesto mo na parang akin na talaga yun HAHA. Nung nagpaalam po ako gamitin yung PC mo, laging okay po sa'yo. Sabi mo pa po kahit di na ako magpaalam. Sayang, need na palitan yung password na unang kong pinalit, maaalala mo sana ako dun sir HAHAHA. (Gardenia.DCream@2026) Salamat din po sa generosity mo po sa akin, iba ka sir Rico (Alrightttttt).`,
 
   tina: `Ma'am Tina
 
-Ma-mi-miss din kita Ma’am Tina, ang pinakaunang nag-utos sa akin na kumuha ng parcel HAHAHA. Unang kita ko sa’yo Ma’am, akala ko po masungit ka pero ganon ka lang po talaga ka-serious, yung face mo po, at the way na magsalita. Pero habang tumatagal po, masayahin ka din po pala at very mabait po. Natuwa po ako nung naghuhulaan tayo kung sinong Sir po ba ang bibilhan ko ng SB dahil pareho po nating di matandaan, halos na mention ko na po lahat si sir Alim lng Yung hindi, tapos nag-sign na lang ako na naka-headphones lagi HAHAHA, kaya tumawa na lang tayo at nag-apir.`,
+Ma-mi-miss din kita Ma'am Tina, ang pinakaunang nag-utos sa akin na kumuha ng parcel HAHAHA. Unang kita ko sa'yo Ma'am, akala ko po masungit ka pero ganon ka lang po talaga ka-serious, yung face mo po, at the way na magsalita. Pero habang tumatagal po, masayahin ka din po pala at very mabait po. Natuwa po ako nung naghuhulaan tayo kung sinong Sir po ba ang bibilhan ko ng SB dahil pareho po nating di matandaan, halos na mention ko na po lahat si sir Alim lng Yung hindi, tapos nag-sign na lang ako na naka-headphones lagi HAHAHA, kaya tumawa na lang tayo at nag-apir.`,
 
   belle: `Ma'am Belle
 
@@ -48,7 +59,7 @@ Ma-mi-miss ko po ang pangungumusta mo at pagsama sakin tuwing nahihiya akong mag
 
   aira: `Ma'am Aira
 
-Ma-mi-miss po kita Ma'am Aira🥺 sobrang bait mo din po samin ni Kenneth, na sa-sad lang po Ako na, yun nga po kunti lang po interaction ko po sa Inyo nila Ma'am Nor, Ma'am Anna, Ma'am Krisha, Ma'am Jamie, and Sir Marco po. dahil bukod po sa mahiyain Ako, palagi din po Ako nakala sir Rico dahil don po Ako pumwepwesto para gawin po maka task ko. anyways Ma'am Aira HAHAHA Ma-mi-miss ko din po yung pagiging kalog mo base sa nakikita ko dahil napaka-palatawa mo din Ma’am at joker HAHA. Di pa po kasi kita masyadong nakakausap dahil malayo ako naka-pwesto, tapos kada may tanong ka, nahihiya akong sumagot. Nung tinanong mo po ako kung anong pabango ko, sabi ko secret HAHAHA. Sorry Ma’am Aira, Beville lang po yun, yung purple, sa Hypermarket ko po binili HEHE.`,
+Ma-mi-miss po kita Ma'am Aira🥺 sobrang bait mo din po samin ni Kenneth, na sa-sad lang po Ako na, yun nga po kunti lang po interaction ko po sa Inyo nila Ma'am Nor, Ma'am Anna, Ma'am Krisha, Ma'am Jamie, and Sir Marco po. dahil bukod po sa mahiyain Ako, palagi din po Ako nakala sir Rico dahil don po Ako pumwepwesto para gawin po maka task ko. anyways Ma'am Aira HAHAHA Ma-mi-miss ko din po yung pagiging kalog mo base sa nakikita ko dahil napaka-palatawa mo din Ma'am at joker HAHA. Di pa po kasi kita masyadong nakakausap dahil malayo ako naka-pwesto, tapos kada may tanong ka, nahihiya akong sumagot. Nung tinanong mo po ako kung anong pabango ko, sabi ko secret HAHAHA. Sorry Ma'am Aira, Beville lang po yun, yung purple, sa Hypermarket ko po binili HEHE.`,
 
   lester: `Sir Lester
 
@@ -76,31 +87,68 @@ Ma-mi-miss ko din po kayo. Thank you for your kindness and understanding at sa p
 
   krisha: `Ma'am Krisha
 
-Ma'am Sa'yo po ako pinaka may least interaction. May times din po na natatakot po ako sa'yo HEHEHE, sorry po Ma'am, pero habang tumatagal po nakikita ko din po kung gano ka po kabait at masayahin siguro po parang Yung first impression ko din po Kay Ma'am Tina, HEHE. Ma-mi-miss kita Ma'am Krisha.💗`,
+Ma'am Sa'yo po ako pinaka may least interaction. May times din po na natatakot po ako sa'yo HEHEHE, sorry po Ma'am, pero habang tumatagal po nakikita ko din po kung gano ka po kabait at masayahin siguro po parang Yung first impression ko din po Kay Ma'am Tina, HEHE. Ma-mi-miss kita Ma'am Krisha.`,
 
   sirA: `Sir A.
 
 Sir, thank you so much po sa everyday lunch ko, sa mga libre n'yo pong BJ, SB, at Gardenia with Dairy cream HEHE at sa pagiging mabait mo po sa akin. Kahit minsan inuuna ko pang magpa-perma kesa tumulong muna sa pag-distribute ng food HEHEHE. Ma-mi-miss ka po ni Kay-kay sir.`,
 };
 
+interface ButtonConfig {
+  id: string;
+  label: string;
+  icon: React.ReactNode;
+}
+
+const buttons: ButtonConfig[] = [
+  { id: 'intro', label: 'Everyone', icon: <Users size={16} /> },
+  { id: 'nor', label: "Ma'am Nor", icon: <User size={16} /> },
+  { id: 'sirK', label: 'Sir K', icon: <User size={16} /> },
+  { id: 'dess', label: "Ma'am Dess", icon: <User size={16} /> },
+  { id: 'rico', label: 'Sir Rico', icon: <User size={16} /> },
+  { id: 'tina', label: "Ma'am Tina", icon: <User size={16} /> },
+  { id: 'belle', label: "Ma'am Belle", icon: <User size={16} /> },
+  { id: 'aira', label: "Ma'am Aira", icon: <User size={16} /> },
+  { id: 'lester', label: 'Sir Lester', icon: <User size={16} /> },
+  { id: 'anna', label: "Ma'am Anna", icon: <User size={16} /> },
+  { id: 'adi', label: 'Sir Adi', icon: <User size={16} /> },
+  { id: 'fahad', label: 'Sir Fahad', icon: <User size={16} /> },
+  { id: 'jamie', label: "Ma'am Jamie", icon: <User size={16} /> },
+  { id: 'others', label: 'Sir Jalani / Alim / Marco', icon: <Users size={16} /> },
+  { id: 'krisha', label: "Ma'am Krisha", icon: <User size={16} /> },
+  { id: 'sirA', label: 'Sir A', icon: <User size={16} /> },
+  { id: 'signoff', label: 'Signing Off', icon: <Sparkles size={16} /> },
+  { id: 'final', label: 'Final Message', icon: <Heart size={16} /> },
+];
+
 export default function Home() {
   const [currentMessage, setCurrentMessage] = useState<string>('intro');
   const [messageClass, setMessageClass] = useState<string>('');
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const showMessage = (name: string) => {
+    setIsAnimating(true);
     setCurrentMessage(name);
     setMessageClass('');
     
-    if (name === 'signoff') {
-      setMessageClass('signoff');
-      setCurrentMessage('SIR A. Kay-kay is now signing off po!');
-    } else if (name === 'final') {
-      setMessageClass('final');
-      setCurrentMessage(`My internship must be over, but the lessons and memories will always be with me. Thank you po for being my home away from home.
+    setTimeout(() => {
+      if (name === 'signoff') {
+        setMessageClass('signoff');
+        setCurrentMessage('SIR A. Kay-kay is now signing off po!');
+      } else if (name === 'final') {
+        setMessageClass('final');
+        setCurrentMessage(`My internship must be over, but the lessons and memories will always be with me. Thank you po for being my home away from home.
 
-I LOVE U COLLECTION SECTION FAMILY 💗
+I LOVE U COLLECTION SECTION FAMILY
 Sana makita ko po ulit kayo.`);
-    }
+      }
+      setIsAnimating(false);
+    }, 150);
   };
 
   const getMessageContent = () => {
@@ -110,48 +158,64 @@ Sana makita ko po ulit kayo.`);
     return messages[currentMessage] || 'Message not found.';
   };
 
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <main>
-      <header>
-        <h1>💼 Collection Fam 💼</h1>
-        <p>Tap your name to read my message 💝</p>
-      </header>
-
-      <div className="audio-container">
-        <audio controls loop autoPlay>
-          <source src="/background-music.mp4" type="audio/mpeg" />
-        </audio>
+      <div className="parallax-bg" />
+      <div className="parallax-overlay" />
+      
+      <div className="hearts-container">
+        {[...Array(8)].map((_, i) => (
+          <Heart
+            key={i}
+            className="floating-heart"
+            size={24 + (i % 3) * 12}
+            fill="currentColor"
+            style={{ left: `${(i * 12) + 5}%` }}
+          />
+        ))}
       </div>
 
-      <section id="output" className={`output ${messageClass}`}>
+      <header>
+        <h1>Collection Fam</h1>
+        <p>Tap your name to read my message</p>
+      </header>
+
+      <audio 
+        ref={(el) => el && el.play().catch(() => {})} 
+        loop 
+        autoPlay 
+        playsInline
+        preload="auto"
+        style={{ display: 'none' }}
+      >
+        <source src="/background-music.mp4" type="audio/mpeg" />
+      </audio>
+
+      <section 
+        id="output" 
+        className={`output ${messageClass} ${isAnimating ? 'message-enter' : ''}`}
+      >
         {getMessageContent()}
       </section>
 
       <section className="buttons">
-        <button onClick={() => showMessage('intro')}>💌 Everyone</button>
-
-        <button onClick={() => showMessage('nor')}>Ma'am Nor</button>
-        <button onClick={() => showMessage('sirK')}>Sir K</button>
-        <button onClick={() => showMessage('dess')}>Ma'am Dess</button>
-        <button onClick={() => showMessage('rico')}>Sir Rico</button>
-        <button onClick={() => showMessage('tina')}>Ma'am Tina</button>
-        <button onClick={() => showMessage('belle')}>Ma'am Belle</button>
-        <button onClick={() => showMessage('aira')}>Ma'am Aira</button>
-        <button onClick={() => showMessage('lester')}>Sir Lester</button>
-        <button onClick={() => showMessage('anna')}>Ma'am Anna</button>
-        <button onClick={() => showMessage('adi')}>Sir Adi</button>
-        <button onClick={() => showMessage('fahad')}>Sir Fahad</button>
-        <button onClick={() => showMessage('jamie')}>Ma'am Jamie</button>
-        <button onClick={() => showMessage('others')}>Sir Jalani / Alim / Marco</button>
-        <button onClick={() => showMessage('krisha')}>Ma'am Krisha</button>
-        <button onClick={() => showMessage('sirA')}>Sir A</button>
-
-        <button onClick={() => showMessage('signoff')}>✨ Signing Off</button>
-        <button onClick={() => showMessage('final')}>💖 Final Message</button>
+        {buttons.map((btn) => (
+          <button 
+            key={btn.id} 
+            onClick={() => showMessage(btn.id)}
+          >
+            {btn.icon}
+            {btn.label}
+          </button>
+        ))}
       </section>
 
       <footer>
-        Made with love by Cathlyne 💕
+        Made with love by Cathlyne
       </footer>
     </main>
   );
