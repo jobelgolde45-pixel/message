@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Collection Fam 💖</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+
+<body>
+
+<header>
+  <h1>💼 Collection Fam 💼</h1>
+  <p>Tap your name to read my message 💝</p>
+</header>
+
+<audio autoplay loop controls>
+  <source src="fam.mp3" type="audio/mpeg">
+</audio>
+
+<main>
+  <section id="output" class="output"></section>
+
+  <section class="buttons">
+    <button onclick="showMessage('intro')">💌 Everyone</button>
+
+    <button onclick="showMessage('nor')">Ma’am Nor</button>
+    <button onclick="showMessage('sirK')">Sir K</button>
+    <button onclick="showMessage('dess')">Ma’am Dess</button>
+    <button onclick="showMessage('rico')">Sir Rico</button>
+    <button onclick="showMessage('tina')">Ma’am Tina</button>
+    <button onclick="showMessage('belle')">Ma’am Belle</button>
+    <button onclick="showMessage('aira')">Ma’am Aira</button>
+    <button onclick="showMessage('lester')">Sir Lester</button>
+    <button onclick="showMessage('anna')">Ma’am Anna</button>
+    <button onclick="showMessage('adi')">Sir Adi</button>
+    <button onclick="showMessage('fahad')">Sir Fahad</button>
+    <button onclick="showMessage('jamie')">Ma’am Jamie</button>
+    <button onclick="showMessage('others')">Sir Jalani / Alim / Marco</button>
+    <button onclick="showMessage('krisha')">Ma’am Krisha</button>
+    <button onclick="showMessage('sirA')">Sir A</button>
+
+    <button onclick="showMessage('signoff')">✨ Signing Off</button>
+    <button onclick="showMessage('final')">💖 Final Message</button>
+  </section>
+</main>
+
+<footer>
+  Made with love by Cathlyne 💕
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
+Cathlyne
+body {
+  margin: 0;
+  font-family: Poppins, sans-serif;
+  background: linear-gradient(135deg, #ffd6e0, #d6f0ff);
+  text-align: center;
+  color: #333;
+}
+
+header {
+  padding: 20px;
+}
+
+h1 {
+  color: #ff2e63;
+}
+
+.output {
+  margin: 20px auto;
+  width: 85%;
+  min-height: 250px;
+  padding: 25px;
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  text-align: left;
+  white-space: pre-wrap;
+  transition: 0.3s;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 15px;
+}
+
+button {
+  border: none;
+  padding: 10px 14px;
+  border-radius: 20px;
+  background: #ff8fab;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background: #ff2e63;
+}
+
+.signoff {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: #ff2e63;
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(255,182,193,0.3);
+  box-shadow: 0 0 20px rgba(255,46,99,0.4);
+  animation: glow 1.2s infinite alternate;
+}
+
+.final {
+  text-align: center;
+  font-size: 18px;
+  color: #ff2e63;
+  padding: 25px;
+  line-height: 1.7;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.6);
+  box-shadow: 0 0 25px rgba(255,105,180,0.3);
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 5px #ff8fab; }
+  to { text-shadow: 0 0 20px #ff2e63; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+footer {
+  padding: 15px;
+}
+Cathlyne
+const messages = {
+
+From:`Cathlyne
+To: Collection Section & Other Staff
+
+Hello Ma’am, hello Sir HEHE
+
+Still can't believe po I survived 486 hours. 3 months na po pala ako andito—hindi ko po namalayan, time really does fly so fast nga po talaga. Sa loob po ng 3 months, ramdam ko po ang pagmamahal ninyong lahat.
+
+Sorry po dahil mahiyain ako sa inyo, hindi po ako gaanong nagsasalita. But I truly appreciate you all po and how you treated me so well.
+
+Before po, gusto ko agad matapos yung oras ng OJT ko para makauwi po agad ako sa Bicol. Lalo na po nung umalis na yung mga BPA, kasama si Kenneth na partner ko dito sa collection, nalungkot po ako nang sobra. To the point na pagka Monday po non, mag-isa lang ako sa pantry, walang kausap dahil ang aga ko po laging pumasok. Iniwan ko po sa table yung bag at tumbler ko, tapos pumunta ako sa CR kasi hindi ko po maiwasang maiyak dahil hindi po ako sanay.
+
+Tapos ang nasa isip ko po non, hayaan ko na lang po—total mabilis na lang naman po yung remaining kong 186 hours. Pero habang palapit nang palapit po, parang ang hirap po palang umalis knowing na matagal ko po kayong nakasama. Ma-mi-miss ko po kayong lahat, sobra.
+
+Ma-mi-miss ko pong gumising nang maaga para hindi ma-late. Ma-mi-miss ko pong maghintay ng jeep sa may labasan. Ma-mi-miss ko po yung mga guards at utilities na naging close ko na rin po. Ma-mi-miss ko pong makipagkwentuhan at makipagbiruan sa kanila.
+
+Ma-mi-miss ko po si Sir Jason na napakabait sa akin, kabiruan, kaasaran at kakwentuhan ko rin minsan. Siyempre po, hindi mawawala yung bully ko na si Sir Cid HAHAHA Ma-mi-miss ko po yung pang-aasar niya sa akin na hindi na natigil, hanggang sa nasanay na lang ako at gumaganti na rin ako, inaasar ko na rin siya pabalik HAHAHAHA 😝
+
+Thank you so much po for everything, Ma’am and Sir, and to all the staff. I will always be grateful for the memories, learnings, and kindness you’ve shared with me during my OJT.
+`,
+
+nor:`Ma’am Nor
+
+Ma-mi-miss ko pong marinig yung tawa mo Ma'am Nor, at pagiging mabait sa amin ni Kenneth simula nung una pa lang. Napaka-understanding mo din po Ma’am. Nung ngka mali po ako lalo na sa mga envelope, yung dapat ₱35, ginawa ko po pinadikitan ko Ng tig-iisa na hindi naman exact ₱35 HAHAHA. Thank you Ma’am dahil di mo po ako pinagalitan, bagkus tinuruan mo po ako ng tama, Super ma-mi-miss kita Ma’am Nor, you're the supervisor that I won't forget forever kahit konti lang po interaction natin huhu, sorry po mahiyain ako.🥺 I love you, Ma'am Nor!`,
+
+sirK:`Sir K.
+
+Wahhh ma-mi-miss kita sir! Thank you po sa pag-kukumusta Sakin at sa pagsabi na magpahinga naman ako, at sa pag-aya mag-almusal kahit di ako sumusunod, sorry po 😅 Super appreciated ko po yun. At yung pag-save mo sa akin dun sa galit na Sir, kabado po ako that time. Pero Ngayon po lagi na syang naka ngiti Sakin at kinaka-usap nia na Ako Ng ma ayos at Hindi galit. Thank you so much po!`,
+
+dess:`Ma’am Dess
+
+Ma-mi-miss ko po ang kwentuhan natin sa counter ng cashier. pag na pasok po Ako Ng Friday gusto ko po lagi don tumambay Kasi nandon po kayo. una palang Ma'am Dess Subrang bait Muna po samin ni Kenneth, and Hindi po nag bago un.I love u po, Ma'am Dess!`,
+
+rico:`Sir Rico
+
+Ma-mi-miss ko po ang pwesto mo na parang akin na talaga yun HAHA. Nung nagpaalam po ako gamitin yung PC mo, laging okay po sa’yo. Sabi mo pa po kahit di na ako magpaalam. Sayang, need na palitan yung password na unang kong pinalit, maaalala mo sana ako dun sir HAHAHA. (Gardenia.DCream@2026) 😂 Salamat din po sa generosity mo po sa akin, iba ka sir Rico (Alrightttttt).`,
+
+tina:`Ma’am Tina
+
+Ma-mi-miss din kita Ma’am Tina, ang pinakaunang nag-utos sa akin na kumuha ng parcel HAHAHA. Unang kita ko sa’yo Ma’am, akala ko po masungit ka pero ganon ka lang po talaga ka-serious, yung face mo po, at the way na magsalita. Pero habang tumatagal po, masayahin ka din po pala at very mabait po. Natuwa po ako nung naghuhulaan tayo kung sinong Sir po ba ang bibilhan ko ng SB dahil pareho po nating di matandaan, halos na mention ko na po lahat si sir Alim lng Yung hindi, tapos nag-sign na lang ako na naka-headphones lagi HAHAHA, kaya tumawa na lang tayo at nag-apir.`,
+
+belle:`Ma’am Belle
+
+Ma-mi-miss ko po ang pangungumusta mo at pagsama sakin tuwing nahihiya akong mag-isa. At lagi ka pong naka ngiti Sakin, at kung mag-alala ka Sakin para kitang Ate. Apaka Dali mo pa pong lapitan. I love you Ma'am Belle. Won't forget u po.`,
+
+aira:`Ma’am Aira
+
+Ma-mi-miss po kita Ma'am Aira🥺 sobrang bait mo din po samin ni Kenneth, na sa-sad lang po Ako na, yun nga po kunti lang po interaction ko po sa Inyo nila Ma'am Nor, Ma'am Anna, Ma'am Krisha, Ma'am Jamie, and Sir Marco po. dahil bukod po sa mahiyain Ako, palagi din po Ako nakala sir Rico dahil don po Ako pumwepwesto para gawin po maka task ko. anyways Ma'am Aira HAHAHA Ma-mi-miss ko din po yung pagiging kalog mo base sa nakikita ko dahil napaka-palatawa mo din Ma’am at joker HAHA. Di pa po kasi kita masyadong nakakausap dahil malayo ako naka-pwesto, tapos kada may tanong ka, nahihiya akong sumagot. Nung tinanong mo po ako kung anong pabango ko, sabi ko secret HAHAHA. Sorry Ma’am Aira, Beville lang po yun, yung purple, sa Hypermarket ko po binili HEHE.`,
+
+lester:`Sir Lester
+
+Ma-mi-miss ko po yung pag may pinapagawa ka po, minimake sure mo po talaga na magagawa ko nang tama. Thankful po ako sa guidance na binibigay mo po at sa pangungumusta mo din po sa akin at pag-ayang kumain.`,
+
+anna:`Ma’am Anna
+
+Gusto ko din po makipag-usap tungkol sa K-pop kaso nahihiya ako HAHAHA. Actually po, I stan all HYBE boy groups, not just BTS. ENHYPEN po talaga ult group ko. Nung nakita ko po yung table ni Ma’am Nor na may Seventeen pics. tapos sa calendar si S.Coups, nagulat po ako kasi I also stan Seventeen. Sabi ko pa po kay Kenneth ipapakita ko yung mga repost ko sa kanya, tapos sinearch nia na din po Yung seventeen sa TikTok and IG nia HAHAHA at Ng kwentohan po kami sa Table ni Ma'am Nor habang Ng e-encode cia Ng ITR HAHA. Tapos may time din po na nakita ko pong may Snickers ka at may picture din po ni Gyu sa table mo, dun ko na po na-realize na si Gyu po bias mo, kay Ma'am Nor naman si S.Coups. Actually po they're both on my bias line. Mingyu, Joshua, Jun at S.Coups.`,
+
+adi:`Sir Adi🫡
+
+Thank you po sa mga learnings na shinare mo, dami ko pong natutunan sa kada pinapagawa mo po. Yung BCS mo po yung pinaka gusto kong i-segregate, Kasi po yung Kay sir Fahad Ng Halo² need Ng masusing pag che-check para di po Ako magka-mali HAHAHA (joke lang sir Fahad 😆). Anyways, thank you so much po sa kabaitan mo sir Adi. Happy to meet you po!`,
+
+fahad:`Sir Fahad 👁️👁️
+
+Sir kahit mapang-asar ka at yung mata mo parang laging galit sa mundo HAHAHA joke lang po. Sir Fahad wag mo po Akong kalimutang i-kumusta sa mga Alien dyan sa Jupiter. Ma-mi-miss po kita Sir, salamat sa pagsabay sa amin ni Norman pag-uwian super appreciated po namin yun lalo na mahal ang pamasahe. Wala ka nang aasarin babalik na po Ako sa Mars. blehhh 😜`,
+
+jamie:`Ma’am Jamie
+
+Na-ugma po ako sadto na diyo ta na storyahan san madali na mag-hali si Kenneth. Super boot mo po Ma’am. Sayang po konti lang interaction ko sa iyo, dapat ngani po talaga in Hali Kuna an raw'ay ko. Ma-mi-miss ko po Ikaw Ma'am Jamie`,
+
+others:`Sir Jalani, Sir Alim, Sir Marco
+
+Ma-mi-miss ko din po kayo. Thank you for your kindness and understanding at sa pagsagot lagi pag may tinatanong po ako.`,
+
+krisha:`Ma’am Krisha
+
+Ma'am Sa’yo po ako pinaka may least interaction. May times din po na natatakot po ako sa’yo HEHEHE, sorry po Ma’am, pero habang tumatagal po nakikita ko din po kung gano ka po kabait at masayahin siguro po parang Yung first impression ko din po Kay Ma'am Tina, HEHE. Ma-mi-miss kita Ma'am Krisha.💗
+
+sirA:`Sir A.
+
+Sir, thank you so much po sa everyday lunch ko, sa mga libre n’yo pong BJ, SB, at Gardenia with Dairy cream HEHE at sa pagiging mabait mo po sa akin. Kahit minsan inuuna ko pang magpa-perma kesa tumulong muna sa pag-distribute ng food HEHEHE. Ma-mi-miss ka po ni Kay-kay sir.`,
+
+signoff:`<div class="signoff">SIR A. Kay-kay is now signing off po!</div>`,
+
+final:`<div class="final">
+My internship must be over, but the lessons and memories will always be with me. Thank you po for being my home away from home.
+<br><br>
+I LOVE U COLLECTION SECTION FAMILY 💗<br>
+Sana makita ko po ulit kayo.
+</div>`
+
+};
+
+function showMessage(name) {
+  const el = document.getElementById("output");
+  el.className = "output";
+
+  if (!messages[name]) {
+    el.innerHTML = "Message not found.";
+    return;
+  }
+
+  el.innerHTML = messages[name];
+
+  if (name === "signoff") el.classList.add("signoff");
+  if (name === "final") el.classList.add("final");
+}
+Cathlyne
+tapos kada may tanong ka, nahihiya akong sumagot. Nung tinanong mo po ako kung anong pabango ko, sabi ko secret HAHAHA. Sorry Ma’am Aira, Beville lang po yun, yung purple, sa Hypermarket ko po binili HEHE.`,
+
+lester:`Sir Lester
+
+Ma-mi-miss ko po yung pag may pinapagawa ka po, minimake sure mo po talaga na magagawa ko nang tama. Thankful po ako sa guidance na binibigay mo po at sa pangungumusta mo din po sa akin at pag-ayang kumain.`,
+
+anna:`Ma’am Anna
+
+Gusto ko din po makipag-usap tungkol sa K-pop kaso nahihiya ako HAHAHA. Actually po, I stan all HYBE boy groups, not just BTS. ENHYPEN po talaga ult group ko. Nung nakita ko po yung table ni Ma’am Nor na may Seventeen pics. tapos sa calendar si S.Coups, nagulat po ako kasi I also stan Seventeen. Sabi ko pa po kay Kenneth ipapakita ko yung mga repost ko sa kanya, tapos sinearch nia na din po Yung seventeen sa TikTok and IG nia HAHAHA at Ng kwentohan po kami sa Table ni Ma'am Nor habang Ng e-encode cia Ng ITR HAHA. Tapos may time din po na nakita ko pong may Snickers ka at may picture din po ni Gyu sa table mo, dun ko na po na-realize na si Gyu po bias mo, kay Ma'am Nor naman si S.Coups. Actually po they're both on my bias line. Mingyu, Joshua, Jun at S.Coups.`,
+
+adi:`Sir Adi🫡
+
+Thank you po sa mga learnings na shinare mo, dami ko pong natutunan sa kada pinapagawa mo po. Yung BCS mo po yung pinaka gusto kong i-segregate, Kasi po yung Kay sir Fahad Ng Halo² need Ng masusing pag che-check para di po Ako magka-mali HAHAHA (joke lang sir Fahad 😆). Anyways, thank you so much po sa kabaitan mo sir Adi. Happy to meet you po!`,
+
+fahad:`Sir Fahad 👁️👁️
+
+Sir kahit mapang-asar ka at yung mata mo parang laging galit sa mundo HAHAHA joke lang po. Sir Fahad wag mo po Akong kalimutang i-kumusta sa mga Alien dyan sa Jupiter. Ma-mi-miss po kita Sir, salamat sa pagsabay sa amin ni Norman pag-uwian super appreciated po namin yun lalo na mahal ang pamasahe. Wala ka nang aasarin babalik na po Ako sa Mars. blehhh 😜`,
+
+jamie:`Ma’am Jamie
+
+Na-ugma po ako sadto na diyo ta na storyahan san madali na mag-hali si Kenneth. Super boot mo po Ma’am. Sayang po konti lang interaction ko sa iyo, dapat ngani po talaga in Hali Kuna an raw'ay ko. Ma-mi-miss ko po Ikaw Ma'am Jamie`,
+
+others:`Sir Jalani, Sir Alim, Sir Marco
+
+Ma-mi-miss ko din po kayo. Thank you for your kindness and understanding at sa pagsagot lagi pag may tinatanong po ako.`,
+
+krisha:`Ma’am Krisha
+
+Ma'am Sa’yo po ako pinaka may least interaction. May times din po na natatakot po ako sa’yo HEHEHE, sorry po Ma’am, pero habang tumatagal po nakikita ko din po kung gano ka po kabait at masayahin siguro po parang Yung first impression ko din po Kay Ma'am Tina, HEHE. Ma-mi-miss kita Ma'am Krisha.💗
+
+sirA:`Sir A.
+
+Sir, thank you so much po sa everyday lunch ko, sa mga libre n’yo pong BJ, SB, at Gardenia with Dairy cream HEHE at sa pagiging mabait mo po sa akin. Kahit minsan inuuna ko pang magpa-perma kesa tumulong muna sa pag-distribute ng food HEHEHE. Ma-mi-miss ka po ni Kay-kay sir.`,
+
+signoff:`<div class="signoff">SIR A. Kay-kay is now signing off po!</div>`,
+
+final:`<div class="final">
+My internship must be over, but the lessons and memories will always be with me. Thank you po for being my home away from home.
+<br><br>
+I LOVE U COLLECTION SECTION FAMILY 💗<br>
+Sana makita ko po ulit kayo.
+</div>`
+
+};
+
+function showMessage(name) {
+  const el = document.getElementById("output");
+  el.className = "output";
+
+  if (!messages[name]) {
+    el.innerHTML = "Message not found.";
+    return;
+  }
+
+  el.innerHTML = messages[name];
+
+  if (name === "signoff") el.classList.add("signoff");
+  if (name === "final") el.classList.add("final");
+}
+

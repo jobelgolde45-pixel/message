@@ -1,0 +1,1 @@
+Mimic the design, text, theme, font, etc. in old.html and place it as a main page of this project. use also the background-music.mp4 as a  background music.
