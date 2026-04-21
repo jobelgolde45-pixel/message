@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, type ReactNode } from 'react';
 import MessageButtons from '@/components/MessageButtons';
 import MessageModal from '@/components/MessageModal';
 import ProfileLink from '@/components/ProfileLink';
+import BackgroundMusic from '@/components/BackgroundMusic';
 import { 
   Heart, 
   Sparkles, 
@@ -388,15 +389,10 @@ Sana makita ko po ulit kayo.`,
           </div>
           <h1>Collection Fam</h1>
           <p className="hero-subtitle">A Heartfelt Goodbye 💕</p>
-          <div className="hero-decor">
-            <span className="decor-heart">💗</span>
-            <span className="decor-heart">💖</span>
-            <span className="decor-heart">💘</span>
-          </div>
-          <p className="hero-message">From Cathlyne with love</p>
+         
         </section>
         
-        <audio id="bg-music" loop autoPlay playsInline preload="auto" hidden />
+        <BackgroundMusic />
         
         <header className={isLoaded ? 'animate-in' : ''}>
           
