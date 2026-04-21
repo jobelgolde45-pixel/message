@@ -74,7 +74,6 @@ export default function MessageCard({
   onClose,
 }: MessageCardProps) {
   const characters = splitTextIntoChars(content);
-  const titleChars = splitTextIntoChars(title);
 
   return (
     <motion.div
