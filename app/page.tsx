@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Heart, 
   Mail, 
@@ -125,6 +125,12 @@ export default function Home() {
   const [currentMessage, setCurrentMessage] = useState<string>('intro');
   const [messageClass, setMessageClass] = useState<string>('');
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const showMessage = (name: string) => {
     setIsAnimating(true);
@@ -143,7 +149,7 @@ I LOVE U COLLECTION SECTION FAMILY
 Sana makita ko po ulit kayo.`);
       }
       setIsAnimating(false);
-    }, 150);
+    }, 180);
   };
 
   const getMessageContent = () => {
@@ -158,7 +164,7 @@ Sana makita ko po ulit kayo.`);
       <section className="hero">
         <div className="hero-bg" />
         <div className="hero-overlay" />
-        <div className="hero-text">
+        <div className={`hero-text ${isLoaded ? 'animate-in' : ''}`}>
           <h1>Collection Fam</h1>
         </div>
       </section>
@@ -167,23 +173,27 @@ Sana makita ko po ulit kayo.`);
       <div className="main-content">
         <audio id="bg-music" loop autoPlay playsInline preload="auto" hidden />
         
-        <header>
+        <header className={isLoaded ? 'animate-in' : ''}>
           <h1>Collection Fam</h1>
           <p>Tap your name to read my message</p>
         </header>
 
       <section 
         id="output" 
-        className={`output ${messageClass} ${isAnimating ? 'message-enter' : ''}`}
+        className={`output ${messageClass} ${isAnimating ? 'message-exit' : 'message-enter'}`}
       >
-        {getMessageContent()}
+        <div className={isAnimating ? 'message-content-exit' : 'message-content-enter'}>
+          {getMessageContent()}
+        </div>
       </section>
 
-      <section className="buttons">
-        {buttons.map((btn) => (
+      <section className={`buttons ${isLoaded ? 'animate-in' : ''}`}>
+        {buttons.map((btn, index) => (
           <button 
             key={btn.id} 
             onClick={() => showMessage(btn.id)}
+            style={{ animationDelay: `${0.7 + index * 0.05}s` }}
+            className="btn-animated"
           >
             {btn.icon}
             {btn.label}
@@ -191,7 +201,7 @@ Sana makita ko po ulit kayo.`);
         ))}
       </section>
 
-      <footer>
+      <footer className={isLoaded ? 'animate-in' : ''}>
         Made with love by Cathlyne
       </footer>
       </div>
