@@ -164,10 +164,86 @@ body {
 }
 
 .hero-banner {
+  --reveal-x: 50%;
+  --reveal-y: 50%;
+  --reveal-size: 0px;
+  --reveal-glow: 0;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-height: 28rem;
   padding: 48px 20px;
   text-align: center;
   background: linear-gradient(180deg, rgba(255, 182, 193, 0.3), transparent);
   border-bottom: 1px solid rgba(255, 46, 99, 0.15);
+}
+
+.hero-banner > * {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-banner-reveal,
+.hero-banner-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-banner-reveal {
+  z-index: 0;
+  background-image: url('/background-picture.jpeg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.08);
+  will-change: opacity, transform;
+  transition:
+    opacity 280ms ease,
+    transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+  -webkit-mask-image: radial-gradient(
+    circle var(--reveal-size) at var(--reveal-x) var(--reveal-y),
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.95) 42%,
+    rgba(255, 255, 255, 0.7) 60%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    circle var(--reveal-size) at var(--reveal-x) var(--reveal-y),
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.95) 42%,
+    rgba(255, 255, 255, 0.7) 60%,
+    transparent 78%
+  );
+}
+
+.hero-banner-glow {
+  z-index: 1;
+  opacity: 0;
+  background:
+    radial-gradient(
+      circle calc(var(--reveal-size) * 0.72) at var(--reveal-x) var(--reveal-y),
+      rgba(255, 255, 255, calc(var(--reveal-glow) * 0.55)) 0%,
+      rgba(255, 255, 255, calc(var(--reveal-glow) * 0.18)) 45%,
+      transparent 75%
+    ),
+    radial-gradient(
+      circle calc(var(--reveal-size) * 1.05) at var(--reveal-x) var(--reveal-y),
+      rgba(255, 104, 150, calc(var(--reveal-glow) * 0.4)) 0%,
+      transparent 72%
+    );
+  mix-blend-mode: screen;
+  will-change: opacity;
+  transition: opacity 240ms ease;
+}
+
+.hero-banner.is-reveal-active .hero-banner-reveal {
+  opacity: 0.95;
+  transform: scale(1.02);
+}
+
+.hero-banner.is-reveal-active .hero-banner-glow {
+  opacity: 1;
 }
 
 .hero-banner .hero-icon {
@@ -481,6 +557,13 @@ footer {
   }
   50% {
     transform: scale(1.015);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .hero-banner-reveal,
+  .hero-banner-glow {
+    display: none;
   }
 }
 

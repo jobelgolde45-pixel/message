@@ -1,22 +1,18 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type ReactNode } from 'react';
 import { 
   Heart, 
-  Mail, 
-  Send, 
   Sparkles, 
   User, 
   Users,
-  ArrowRight,
-  Star,
-  Music
 } from 'lucide-react';
 
 interface CursorHeart {
   id: number;
   x: number;
   y: number;
+  size?: number;
 }
 
 const messages: Record<string, string> = {
@@ -103,7 +99,7 @@ Sir, thank you so much po sa everyday lunch ko, sa mga libre n'yo pong BJ, SB, a
 interface ButtonConfig {
   id: string;
   label: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
 }
 
 const buttons: ButtonConfig[] = [
@@ -132,10 +128,16 @@ export default function Home() {
   const [messageClass, setMessageClass] = useState<string>('');
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [isHeroActive, setIsHeroActive] = useState<boolean>(false);
   const [cursorHearts, setCursorHearts] = useState<CursorHeart[]>([]);
   const [risingHearts, setRisingHearts] = useState<CursorHeart[]>([]);
   const heartIdRef = useRef(0);
   const risingHeartIdRef = useRef(0);
+  const heroBannerRef = useRef<HTMLElement | null>(null);
+  const heroAnimationFrameRef = useRef<number | null>(null);
+  const heroCurrentRef = useRef({ x: 0, y: 0, radius: 0, glow: 0 });
+  const heroTargetRef = useRef({ x: 0, y: 0, radius: 0, glow: 0 });
+  const heroLastPointRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoaded(true), 100);
@@ -165,12 +167,131 @@ export default function Home() {
           id: risingHeartIdRef.current++,
           x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 800),
           y: typeof window !== 'undefined' ? window.innerHeight : 600,
+          size: Math.random() * 10 + 10,
         });
       }
       setRisingHearts(prev => [...prev.slice(-20), ...newHearts]);
     }, 800);
 
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const banner = heroBannerRef.current;
+    if (!banner || typeof window === 'undefined') {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia('(hover: none), (pointer: coarse)');
+    if (mediaQuery.matches) {
+      return;
+    }
+
+    const setBannerVars = (x: number, y: number, radius: number, glow: number) => {
+      banner.style.setProperty('--reveal-x', `${x}px`);
+      banner.style.setProperty('--reveal-y', `${y}px`);
+      banner.style.setProperty('--reveal-size', `${radius}px`);
+      banner.style.setProperty('--reveal-glow', `${glow}`);
+    };
+
+    const resetToCenter = () => {
+      const rect = banner.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      heroCurrentRef.current = { x: centerX, y: centerY, radius: 0, glow: 0 };
+      heroTargetRef.current = { x: centerX, y: centerY, radius: 0, glow: 0 };
+      heroLastPointRef.current = { x: centerX, y: centerY };
+      setBannerVars(centerX, centerY, 0, 0);
+    };
+
+    const animate = () => {
+      const current = heroCurrentRef.current;
+      const target = heroTargetRef.current;
+
+      current.x += (target.x - current.x) * 0.16;
+      current.y += (target.y - current.y) * 0.16;
+      current.radius += (target.radius - current.radius) * 0.14;
+      current.glow += (target.glow - current.glow) * 0.16;
+
+      setBannerVars(current.x, current.y, current.radius, current.glow);
+
+      const isSettled =
+        Math.abs(target.x - current.x) < 0.4 &&
+        Math.abs(target.y - current.y) < 0.4 &&
+        Math.abs(target.radius - current.radius) < 0.4 &&
+        Math.abs(target.glow - current.glow) < 0.02;
+
+      if (isSettled) {
+        heroAnimationFrameRef.current = null;
+        return;
+      }
+
+      heroAnimationFrameRef.current = window.requestAnimationFrame(animate);
+    };
+
+    const startAnimation = () => {
+      if (heroAnimationFrameRef.current !== null) {
+        return;
+      }
+
+      heroAnimationFrameRef.current = window.requestAnimationFrame(animate);
+    };
+
+    const updateTarget = (event: MouseEvent, activate: boolean) => {
+      const rect = banner.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      const deltaX = x - heroLastPointRef.current.x;
+      const deltaY = y - heroLastPointRef.current.y;
+      const speed = Math.hypot(deltaX, deltaY);
+      const radius = Math.min(250, Math.max(170, 180 + speed * 0.45));
+      const glow = Math.min(0.42, 0.16 + speed * 0.0035);
+
+      heroTargetRef.current = { x, y, radius, glow };
+      heroLastPointRef.current = { x, y };
+
+      if (activate) {
+        setIsHeroActive(true);
+      }
+
+      startAnimation();
+    };
+
+    const handleMouseEnter = (event: MouseEvent) => {
+      updateTarget(event, true);
+    };
+
+    const handleMouseMove = (event: MouseEvent) => {
+      updateTarget(event, false);
+    };
+
+    const handleMouseLeave = () => {
+      const rect = banner.getBoundingClientRect();
+      heroTargetRef.current = {
+        x: rect.width / 2,
+        y: rect.height / 2,
+        radius: 0,
+        glow: 0,
+      };
+      setIsHeroActive(false);
+      startAnimation();
+    };
+
+    resetToCenter();
+    banner.addEventListener('mouseenter', handleMouseEnter);
+    banner.addEventListener('mousemove', handleMouseMove);
+    banner.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      banner.removeEventListener('mouseenter', handleMouseEnter);
+      banner.removeEventListener('mousemove', handleMouseMove);
+      banner.removeEventListener('mouseleave', handleMouseLeave);
+
+      if (heroAnimationFrameRef.current !== null) {
+        window.cancelAnimationFrame(heroAnimationFrameRef.current);
+        heroAnimationFrameRef.current = null;
+      }
+    };
   }, []);
 
   const handleHeartAnimationEnd = (id: number, type: 'cursor' | 'rising') => {
@@ -228,12 +349,17 @@ Sana makita ko po ulit kayo.`);
           style={{ left: heart.x }}
           onAnimationEnd={() => handleHeartAnimationEnd(heart.id, 'rising')}
         >
-          <Heart size={Math.random() * 10 + 10} fill="rgba(255, 46, 99, 0.4)" />
+          <Heart size={heart.size ?? 14} fill="rgba(255, 46, 99, 0.4)" />
         </div>
       ))}
 
 <div className="main-content">
-        <section className="hero-banner">
+        <section
+          ref={heroBannerRef}
+          className={`hero-banner ${isHeroActive ? 'is-reveal-active' : ''}`}
+        >
+          <div className="hero-banner-reveal" aria-hidden="true" />
+          <div className="hero-banner-glow" aria-hidden="true" />
           <div className="hero-icon">
             <Heart size={48} fill="#ff2e63" />
           </div>
@@ -250,7 +376,7 @@ Sana makita ko po ulit kayo.`);
         <audio id="bg-music" loop autoPlay playsInline preload="auto" hidden />
         
         <header className={isLoaded ? 'animate-in' : ''}>
-          <h1>Collection Fam</h1>
+          
           <p>Tap your name to read my message</p>
         </header>
 
