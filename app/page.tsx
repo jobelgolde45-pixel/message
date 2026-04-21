@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { 
   Heart, 
   Mail, 
@@ -12,6 +12,12 @@ import {
   Star,
   Music
 } from 'lucide-react';
+
+interface CursorHeart {
+  id: number;
+  x: number;
+  y: number;
+}
 
 const messages: Record<string, string> = {
   intro: `From: Cathlyne
@@ -126,11 +132,54 @@ export default function Home() {
   const [messageClass, setMessageClass] = useState<string>('');
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [cursorHearts, setCursorHearts] = useState<CursorHeart[]>([]);
+  const [risingHearts, setRisingHearts] = useState<CursorHeart[]>([]);
+  const heartIdRef = useRef(0);
+  const risingHeartIdRef = useRef(0);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoaded(true), 100);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const newHeart: CursorHeart = {
+        id: heartIdRef.current++,
+        x: e.clientX,
+        y: e.clientY,
+      };
+      setCursorHearts(prev => [...prev.slice(-12), newHeart]);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const heartCount = Math.floor(Math.random() * 3) + 1;
+      const newHearts: CursorHeart[] = [];
+      for (let i = 0; i < heartCount; i++) {
+        newHearts.push({
+          id: risingHeartIdRef.current++,
+          x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 800),
+          y: typeof window !== 'undefined' ? window.innerHeight : 600,
+        });
+      }
+      setRisingHearts(prev => [...prev.slice(-20), ...newHearts]);
+    }, 800);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleHeartAnimationEnd = (id: number, type: 'cursor' | 'rising') => {
+    if (type === 'cursor') {
+      setCursorHearts(prev => prev.filter(h => h.id !== id));
+    } else {
+      setRisingHearts(prev => prev.filter(h => h.id !== id));
+    }
+  };
 
   const showMessage = (name: string) => {
     setIsAnimating(true);
@@ -161,11 +210,36 @@ Sana makita ko po ulit kayo.`);
 
   return (
     <main>
+      {cursorHearts.map((heart) => (
+        <div
+          key={heart.id}
+          className="cursor-heart"
+          style={{ left: heart.x, top: heart.y }}
+          onAnimationEnd={() => handleHeartAnimationEnd(heart.id, 'cursor')}
+        >
+          <Heart size={14} fill="#ff2e63" />
+        </div>
+      ))}
+      
+      {risingHearts.map((heart) => (
+        <div
+          key={heart.id}
+          className="rising-heart"
+          style={{ left: heart.x }}
+          onAnimationEnd={() => handleHeartAnimationEnd(heart.id, 'rising')}
+        >
+          <Heart size={Math.random() * 10 + 10} fill="rgba(255, 46, 99, 0.4)" />
+        </div>
+      ))}
+
       <section className="hero">
         <div className="hero-bg" />
         <div className="hero-overlay" />
-        <div className={`hero-text ${isLoaded ? 'animate-in' : ''}`}>
-          <h1>Collection Fam</h1>
+        <div className={`hero-content-wrapper ${isLoaded ? 'animate-in' : ''}`}>
+          <div className="hero-text">
+            <h1>Collection Fam</h1>
+            <p className="hero-subtitle">A heartfelt goodbye 💖</p>
+          </div>
         </div>
       </section>
       <div style={{ height: '100vh' }} />
