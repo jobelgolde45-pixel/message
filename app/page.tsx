@@ -72,7 +72,7 @@ Ma-mi-miss ko po yung pag may pinapagawa ka po, minimake sure mo po talaga na ma
 
   anna: `Ma'am Anna
 
-Gusto ko din po makipag-usap tungkol sa K-pop kaso nahihiya ako HAHAHA. Actually po, I stan all HYBE boy groups, not just BTS. ENHYPEN po talaga ult group ko. Nung nakita ko po yung table ni Ma'am Nor na may Seventeen pics. tapos sa calendar si S.Coups, nagulat po ako kasi I also stan Seventeen. Sabi ko pa po kay Kenneth ipapakita ko yung mga repost ko sa kanya, tapos sinearch nia na din po Yung seventeen sa TikTok and IG nia HAHAHA at Ng kwentohan po kami sa Table ni Ma'am Nor habang Ng e-encode cia Ng ITR HAHA. Tapos may time din po na nakita ko pong may Snickers ka at may picture din po ni Gyu sa table mo, dun ko na po na-realize na si Gyu po bias mo, kay Ma'am Nor naman si S.Coups. Actually po they're both on my bias line. Mingyu, Joshua, Jun at S.Coups.`,
+Gusto ko din po makipag-usap tungkol sa K-pop kaso nahihiya ako HAHAHA. Actually po, I stan all HYBE boy groups, not just BTS. ENHYPEN po talaga ult group ko. Nung nakita ko po yung table ni Ma'am Nor na may Seventeen pics. tapos sa calendar si S.Coups, nagulat po ako kasi I also stan Seventeen. Sabi ko pa po kay Kenneth ipapakita ko yung mga repost ko sa kanya, tapos sinearch nia na din po Yung seventeen sa TikTok and IG nia HAHAHA at Ng kwentohan po kami sa Table ni Ma'am Nor habang Ng e-encode cia Ng ITR HAHA. Tapos may time din po na nakita ko pong may Snickers ka at may picture din po ni Gyu sa table mo, dun ko na po na-realize na si Gyu po bias mo, kay Ma'am Nor naman si S.Coups. Actually po they're both on my bias line. Mingyu, Joshua, Jun at S.Coups. I'm going to miss you Ma'am Anna `,
 
   adi: `Sir Adi🫡
 
