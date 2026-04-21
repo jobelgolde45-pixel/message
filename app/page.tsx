@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef, type ReactNode } from 'react';
+import MessageButtons from '@/components/MessageButtons';
+import MessageModal from '@/components/MessageModal';
 import { 
   Heart, 
   Sparkles, 
@@ -102,6 +104,13 @@ interface ButtonConfig {
   icon: ReactNode;
 }
 
+interface ActiveMessage {
+  id: string;
+  title: string;
+  content: string;
+  tone: 'default' | 'signoff' | 'final';
+}
+
 const buttons: ButtonConfig[] = [
   { id: 'intro', label: 'Everyone', icon: <Users size={16} /> },
   { id: 'nor', label: "Ma'am Nor", icon: <User size={16} /> },
@@ -124,9 +133,8 @@ const buttons: ButtonConfig[] = [
 ];
 
 export default function Home() {
-  const [currentMessage, setCurrentMessage] = useState<string>('intro');
-  const [messageClass, setMessageClass] = useState<string>('');
-  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [activeMessage, setActiveMessage] = useState<ActiveMessage | null>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isHeroActive, setIsHeroActive] = useState<boolean>(false);
   const [cursorHearts, setCursorHearts] = useState<CursorHeart[]>([]);
@@ -302,35 +310,49 @@ export default function Home() {
     }
   };
 
-  const showMessage = (name: string) => {
-    setIsAnimating(true);
-    setCurrentMessage(name);
-    setMessageClass('');
-    
-    setTimeout(() => {
-      if (name === 'signoff') {
-        setMessageClass('signoff');
-        setCurrentMessage('SIR A. Kay-kay is now signing off po!');
-      } else if (name === 'final') {
-        setMessageClass('final');
-        setCurrentMessage(`My internship must be over, but the lessons and memories will always be with me. Thank you po for being my home away from home.
+  const getMessageById = (id: string): ActiveMessage => {
+    if (id === 'signoff') {
+      return {
+        id,
+        title: 'Signing Off',
+        content: 'SIR A. Kay-kay is now signing off po!',
+        tone: 'signoff',
+      };
+    }
+
+    if (id === 'final') {
+      return {
+        id,
+        title: 'Final Message',
+        content: `My internship must be over, but the lessons and memories will always be with me. Thank you po for being my home away from home.
 
 I LOVE U COLLECTION SECTION FAMILY
-Sana makita ko po ulit kayo.`);
-      }
-      setIsAnimating(false);
-    }, 180);
+Sana makita ko po ulit kayo.`,
+        tone: 'final',
+      };
+    }
+
+    return {
+      id,
+      title: buttons.find((button) => button.id === id)?.label ?? 'Message',
+      content: messages[id] || 'Message not found.',
+      tone: 'default',
+    };
   };
 
-  const getMessageContent = () => {
-    if (currentMessage === 'signoff' || currentMessage === 'final') {
-      return currentMessage;
-    }
-    return messages[currentMessage] || 'Message not found.';
+  const showMessage = (id: string) => {
+    setActiveMessage(getMessageById(id));
+    setIsOpen(true);
+  };
+
+  const closeMessage = () => {
+    setIsOpen(false);
   };
 
   return (
     <main>
+      <MessageModal activeMessage={activeMessage} isOpen={isOpen} onClose={closeMessage} />
+
       {cursorHearts.map((heart) => (
         <div
           key={heart.id}
@@ -380,28 +402,7 @@ Sana makita ko po ulit kayo.`);
           <p>Tap your name to read my message</p>
         </header>
 
-      <section 
-        id="output" 
-        className={`output ${messageClass} ${isAnimating ? 'message-exit' : 'message-enter'}`}
-      >
-        <div className={isAnimating ? 'message-content-exit' : 'message-content-enter'}>
-          {getMessageContent()}
-        </div>
-      </section>
-
-      <section className={`buttons ${isLoaded ? 'animate-in' : ''}`}>
-        {buttons.map((btn, index) => (
-          <button 
-            key={btn.id} 
-            onClick={() => showMessage(btn.id)}
-            style={{ animationDelay: `${0.7 + index * 0.05}s` }}
-            className="btn-animated"
-          >
-            {btn.icon}
-            {btn.label}
-          </button>
-        ))}
-      </section>
+      <MessageButtons buttons={buttons} isLoaded={isLoaded} onSelect={showMessage} />
 
       <footer className={isLoaded ? 'animate-in' : ''}>
         Made with love by Cathlyne

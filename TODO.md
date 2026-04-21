@@ -1,96 +1,173 @@
-Create an interactive cursor-based image reveal effect on the .hero-banner section of the web app.
-
+✅ AI Agent Prompt: Message Reveal Animation (Next.js + Tailwind)
 🎯 Goal
 
-When the user hovers over the hero-banner, an image (public/background-picture.jpeg) should be revealed only inside a circular area that follows the cursor. The rest of the section remains unchanged.
+Implement a smooth, premium message reveal animation when a user clicks:
 
-🧠 Behavior Requirements
-Cursor Tracking
-Track the mouse position inside .hero-banner.
-The reveal area must follow the cursor smoothly (no lag/jitter).
-Reveal Effect
-Use a masking technique (CSS mask-image or clip-path) OR a positioned overlay.
-The revealed portion should be a circle (or soft radial gradient).
-Outside the circle → image is hidden.
-Inside the circle → image is visible.
-Smoothness
-Apply easing using:
-requestAnimationFrame OR
-CSS transitions (transform, opacity)
-Movement must feel fluid and premium (60fps target).
-Hover Activation
-Effect only activates when hovering .hero-banner.
-On mouse leave:
-Fade out the reveal smoothly.
-Reset position gracefully.
-🎨 Styling Requirements
-The .hero-banner should:
-Maintain existing design (DO NOT break layout or theme).
-Have position: relative and overflow: hidden.
-The reveal layer:
-Use position: absolute and cover full banner.
+“Specific Person” button
+“Everyone” button
 
-Background image:
+The message should open like an expanding card, not just appear abruptly.
 
-background-image: url('/background-picture.jpeg');
-background-size: cover;
-background-position: center;
-Initially hidden (opacity: 0).
-Reveal circle:
-Size: ~150px–250px radius (responsive if possible).
-Soft edge using radial-gradient mask for premium feel.
-⚙️ Implementation Approach (Preferred)
+🧠 Core Behavior
+Trigger
+Clicking:
+Specific Person
+Everyone
+This sets the selected message and triggers the animation
+State Management
 
-Use CSS + JavaScript (or React if Next.js):
+Maintain:
 
-Option A (Recommended):
+const [activeMessage, setActiveMessage] = useState(null);
+const [isOpen, setIsOpen] = useState(false);
+Flow
+Button click →
+Set message →
+Animate card opening →
+Display full message content
+Close Behavior
+Close button OR click outside
+Reverse animation smoothly
+🎨 Animation Design (IMPORTANT)
+✨ Opening Sequence
+Card Expansion (Main Effect)
+Starts from a compact state
+Expands to centered modal/card
+Transform Animation
+Use:
+scale: 0.95 → 1
+opacity: 0 → 1
+slight translateY(20px → 0)
 
-Use a div overlay with:
+Smooth Timing
+Use Tailwind custom easing:
 
-mask-image: radial-gradient(circle at center, white 0%, transparent 80%);
+ease-[cubic-bezier(0.4,0,0.2,1)]
+duration-300 or duration-500
+Backdrop Effect
 
-Dynamically update mask position via CSS variables:
+Dark overlay:
 
---x: 50%;
---y: 50%;
-Option B:
-Use clip-path: circle() and update position dynamically.
-🧩 Example Logic (JS)
-On mousemove:
-Get cursor position relative to .hero-banner
+bg-black/40 backdrop-blur-sm
+Fade in smoothly
+⚙️ Implementation Strategy (RECOMMENDED)
+✅ Use Framer Motion (Best Practice for Next.js)
 
-Update CSS variables:
+Install:
 
-element.style.setProperty('--x', `${x}px`);
-element.style.setProperty('--y', `${y}px`);
-On mouseenter:
-Fade in overlay
-On mouseleave:
-Fade out overlay
+npm install framer-motion
+🧩 Component Structure
+components/
+ ├── MessageButtons.tsx
+ ├── MessageModal.tsx
+ └── MessageCard.tsx
+🧱 Implementation Details
+1. Button Click Logic
+Buttons:
+“Specific Person”
+“Everyone”
+On click:
+setActiveMessage(messageData);
+setIsOpen(true);
+2. Modal with Animation (Framer Motion)
+
+Use:
+
+AnimatePresence
+motion.div
+
+Example behavior:
+
+Backdrop
+Fade in/out
+Card Animation
+
+Use:
+
+initial={{ opacity: 0, scale: 0.95, y: 20 }}
+animate={{ opacity: 1, scale: 1, y: 0 }}
+exit={{ opacity: 0, scale: 0.95, y: 20 }}
+transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+3. Layout Animation (Advanced / Recommended)
+
+If messages originate from visible cards/buttons:
+
+Use layoutId for shared layout transition
+
+Example:
+
+<motion.div layoutId={`message-${id}`}>
+
+This creates a morphing effect from button → modal
+
+4. Tailwind Styling
+
+Modal container:
+
+fixed inset-0 flex items-center justify-center z-50
+
+Card:
+
+bg-white rounded-2xl p-6 shadow-2xl max-w-lg w-full
+
+Backdrop:
+
+absolute inset-0 bg-black/40 backdrop-blur-sm
+5. Content Reveal Animation
+
+Inside the card:
+
+Stagger content animation:
+initial="hidden"
+animate="visible"
+
+variants={{
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08
+    }
+  }
+}}
+
+Child elements:
+
+variants={{
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0 }
+}}
 🚀 Performance Best Practices
-Use will-change: transform, opacity
-Avoid heavy DOM updates
-Use requestAnimationFrame if needed
-Debounce unnecessary calculations
+Use:
+transform and opacity only
+Avoid:
+animating width/height directly
+Add:
+will-change: transform, opacity;
 📱 Responsiveness
-On mobile:
-Disable or fallback (since hover doesn't exist)
-Option: show static background instead
+Mobile:
+
+Full screen modal:
+
+w-full h-full rounded-none
+Desktop:
+Centered card with max width
 🧪 Acceptance Criteria
-Cursor reveals image smoothly
-No lag or flicker
-Works across modern browsers
-Does not break layout or existing styles
-Clean, maintainable code (modular if using React)
-🧱 Bonus Enhancements (Optional but Recommended)
-Add slight scale or parallax effect to background image
-Add subtle glow around reveal circle
-Make circle size slightly dynamic based on speed
-📂 File Expectations
-Update:
-HeroBanner component (or equivalent)
-CSS module / Tailwind / global styles
-
-Ensure image is loaded from:
-
-/public/background-picture.jpeg
+Clicking button opens message with smooth animation
+Animation feels like card expanding, not popping
+Closing reverses animation cleanly
+No flicker or layout shift
+Works across devices
+🧱 Bonus Enhancements (Highly Recommended)
+Add spring animation:
+transition={{ type: "spring", stiffness: 300, damping: 25 }}
+Add hover micro-interaction on buttons:
+hover:scale-105 transition-transform
+Add subtle glow/shadow on open
+❗ Constraints
+DO NOT break existing design/theme
+ONLY enhance interaction and animation
+Keep code clean, modular, and reusable
+📂 Final Deliverables
+Fully working animated message reveal
+Clean component separation
+Maintainable and scalable code
