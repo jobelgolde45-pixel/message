@@ -232,19 +232,21 @@ Sana makita ko po ulit kayo.`);
         </div>
       ))}
 
-      <section className="hero">
-        <div className="hero-bg" />
-        <div className="hero-overlay" />
-        <div className={`hero-content-wrapper ${isLoaded ? 'animate-in' : ''}`}>
-          <div className="hero-text">
-            <h1>Collection Fam</h1>
-            <p className="hero-subtitle">A heartfelt goodbye 💖</p>
+<div className="main-content">
+        <section className="hero-banner">
+          <div className="hero-icon">
+            <Heart size={48} fill="#ff2e63" />
           </div>
-        </div>
-      </section>
-      <div style={{ height: '100vh' }} />
-
-      <div className="main-content">
+          <h1>Collection Fam</h1>
+          <p className="hero-subtitle">A Heartfelt Goodbye 💕</p>
+          <div className="hero-decor">
+            <span className="decor-heart">💗</span>
+            <span className="decor-heart">💖</span>
+            <span className="decor-heart">💘</span>
+          </div>
+          <p className="hero-message">From Cathlyne with love</p>
+        </section>
+        
         <audio id="bg-music" loop autoPlay playsInline preload="auto" hidden />
         
         <header className={isLoaded ? 'animate-in' : ''}>
