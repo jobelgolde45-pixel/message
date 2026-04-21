@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, type ReactNode } from 'react';
 import MessageButtons from '@/components/MessageButtons';
 import MessageModal from '@/components/MessageModal';
+import ProfileLink from '@/components/ProfileLink';
 import { 
   Heart, 
   Sparkles, 
@@ -405,7 +406,7 @@ Sana makita ko po ulit kayo.`,
       <MessageButtons buttons={buttons} isLoaded={isLoaded} onSelect={showMessage} />
 
       <footer className={isLoaded ? 'animate-in' : ''}>
-        Made with love by Cathlyne
+        Made with love by <ProfileLink />
       </footer>
       </div>
     </main>
