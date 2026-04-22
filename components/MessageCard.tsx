@@ -25,56 +25,12 @@ const itemVariants: Variants = {
   visible: { opacity: 1, y: 0 },
 };
 
-// Modern content reveal animation variants - properly typed
-const contentContainerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.03,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const charVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 20,
-    rotateX: -15,
-    filter: 'blur(4px)',
-  },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    rotateX: 0,
-    filter: 'blur(0px)',
-    transition: {
-      type: 'spring' as const,
-      stiffness: 300,
-      damping: 20,
-      delay: i * 0.02,
-    },
-  }),
-};
-
-// Splits text into characters with proper spacing handling
-const splitTextIntoChars = (text: string) => {
-  return text.split('').map((char, i) => ({
-    char: char === ' ' ? '\u00A0' : char,
-    key: i,
-    isSpace: char === ' ',
-  }));
-};
-
 export default function MessageCard({
   content,
   title,
   tone,
   onClose,
 }: MessageCardProps) {
-  const characters = splitTextIntoChars(content);
-
   return (
     <motion.div
       className={`message-modal-card message-tone-${tone}`}
@@ -142,31 +98,12 @@ export default function MessageCard({
           {title}
         </motion.h2>
 
-        {/* Modern character-by-character reveal animation for content */}
         <motion.div
           className="message-modal-content-wrapper"
-          variants={contentContainerVariants}
-          initial="hidden"
-          animate="visible"
-          exit="hidden"
+          variants={itemVariants}
         >
           <div className="message-modal-content">
-            {characters.map(({ char, key, isSpace }) => (
-              <motion.span
-                key={key}
-                custom={key}
-                variants={charVariants}
-                className="message-content-char"
-                style={{
-                  display: 'inline-block',
-                  whiteSpace: 'pre',
-                  marginRight: isSpace ? '0.25em' : '0',
-                }}
-                aria-hidden="true"
-              >
-                {char}
-              </motion.span>
-            ))}
+            {content}
           </div>
         </motion.div>
       </motion.div>
@@ -274,13 +211,6 @@ export default function MessageCard({
           white-space: pre-wrap;
           word-break: break-word;
           margin: 0;
-          display: flex;
-          flex-wrap: wrap;
-        }
-
-        .message-content-char {
-          display: inline-block;
-          will-change: transform, opacity, filter;
         }
 
         /* Tone-specific styles */

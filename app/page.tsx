@@ -114,7 +114,6 @@ interface ActiveMessage {
 }
 
 const buttons: ButtonConfig[] = [
-  { id: 'intro', label: 'Everyone', icon: <Users size={16} /> },
   { id: 'nor', label: "Ma'am Nor", icon: <User size={16} /> },
   { id: 'sirK', label: 'Sir K', icon: <User size={16} /> },
   { id: 'dess', label: "Ma'am Dess", icon: <User size={16} /> },
@@ -130,6 +129,7 @@ const buttons: ButtonConfig[] = [
   { id: 'others', label: 'Sir Jalani / Alim / Marco', icon: <Users size={16} /> },
   { id: 'krisha', label: "Ma'am Krisha", icon: <User size={16} /> },
   { id: 'sirA', label: 'Sir A', icon: <User size={16} /> },
+  { id: 'intro', label: 'Everyone', icon: <Users size={16} /> },
   { id: 'signoff', label: 'Signing Off', icon: <Sparkles size={16} /> },
   { id: 'final', label: 'Final Message', icon: <Heart size={16} /> },
 ];
@@ -156,13 +156,22 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    let lastTime = 0;
+    const throttleMs = 50; // Only add a heart every 50ms
+
     const handleMouseMove = (e: MouseEvent) => {
+      const now = Date.now();
+      if (now - lastTime < throttleMs) {
+        return;
+      }
+      lastTime = now;
+
       const newHeart: CursorHeart = {
         id: heartIdRef.current++,
         x: e.clientX,
         y: e.clientY,
       };
-      setCursorHearts(prev => [...prev.slice(-12), newHeart]);
+      setCursorHearts(prev => [...prev.slice(-8), newHeart]);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
