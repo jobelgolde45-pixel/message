@@ -139,10 +139,12 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isHeroActive, setIsHeroActive] = useState<boolean>(false);
+  const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
   const [cursorHearts, setCursorHearts] = useState<CursorHeart[]>([]);
   const [risingHearts, setRisingHearts] = useState<CursorHeart[]>([]);
   const heartIdRef = useRef(0);
   const risingHeartIdRef = useRef(0);
+  const floatingHeartRef = useRef({ x: 0, y: 0, vx: 0, vy: 0 });
   const heroBannerRef = useRef<HTMLElement | null>(null);
   const heroAnimationFrameRef = useRef<number | null>(null);
   const heroCurrentRef = useRef({ x: 0, y: 0, radius: 0, glow: 0 });
@@ -304,6 +306,92 @@ export default function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    const checkTouch = () => {
+      setIsTouchDevice(
+        'ontouchstart' in window || 
+        navigator.maxTouchPoints > 0 || 
+        window.matchMedia('(pointer: coarse)').matches
+      );
+    };
+    checkTouch();
+  }, []);
+
+  useEffect(() => {
+    if (!isTouchDevice || typeof window === 'undefined') return;
+
+    const banner = heroBannerRef.current;
+    if (!banner) return;
+
+    let animationFrame: number;
+
+    const updateFloatingHeart = () => {
+      const rect = banner.getBoundingClientRect();
+      const padding = 80;
+      const x = padding + Math.random() * (rect.width - padding * 2);
+      const y = padding + Math.random() * (rect.height - padding * 2);
+
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 1 + Math.random() * 1.5;
+      floatingHeartRef.current = {
+        x,
+        y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+      };
+
+      banner.style.setProperty('--reveal-x', `${x}px`);
+      banner.style.setProperty('--reveal-y', `${y}px`);
+      banner.style.setProperty('--reveal-size', '180px');
+      banner.style.setProperty('--reveal-glow', '0.3');
+      setIsHeroActive(true);
+    };
+
+    const animateHeart = () => {
+      const ref = floatingHeartRef.current;
+      const rect = banner.getBoundingClientRect();
+
+      ref.x += ref.vx;
+      ref.y += ref.vy;
+
+      if (ref.x < 0) {
+        ref.x = 0;
+        ref.vx *= -1;
+      }
+      if (ref.x > rect.width) {
+        ref.x = rect.width;
+        ref.vx *= -1;
+      }
+      if (ref.y < 0) {
+        ref.y = 0;
+        ref.vy *= -1;
+      }
+      if (ref.y > rect.height) {
+        ref.y = rect.height;
+        ref.vy *= -1;
+      }
+
+      banner.style.setProperty('--reveal-x', `${ref.x}px`);
+      banner.style.setProperty('--reveal-y', `${ref.y}px`);
+
+      animationFrame = requestAnimationFrame(animateHeart);
+    };
+
+    updateFloatingHeart();
+    animateHeart();
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      if (banner) {
+        banner.style.setProperty('--reveal-x', '50%');
+        banner.style.setProperty('--reveal-y', '50%');
+        banner.style.setProperty('--reveal-size', '0px');
+        banner.style.setProperty('--reveal-glow', '0');
+      }
+      setIsHeroActive(false);
+    };
+  }, [isTouchDevice]);
+
   const handleHeartAnimationEnd = (id: number, type: 'cursor' | 'rising') => {
     if (type === 'cursor') {
       setCursorHearts(prev => prev.filter(h => h.id !== id));
@@ -384,12 +472,11 @@ Sana makita ko po ulit kayo.`,
         >
           <div className="hero-banner-reveal" aria-hidden="true" />
           <div className="hero-banner-glow" aria-hidden="true" />
-          <div className="hero-icon">
+<div className="hero-icon">
             <Heart size={48} fill="#ff2e63" />
           </div>
           <h1>Collection Fam</h1>
           <p className="hero-subtitle">A Heartfelt Goodbye 💕</p>
-         
         </section>
         
         <BackgroundMusic />

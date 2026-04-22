@@ -246,6 +246,42 @@ body {
   opacity: 1;
 }
 
+@media (hover: none) and (pointer: coarse) {
+  .hero-banner-reveal {
+    opacity: 0.9;
+  }
+  .hero-banner-glow {
+    opacity: 0.8;
+  }
+}
+
+.floating-heart {
+  position: absolute;
+  z-index: 0;
+  width: 320px;
+  height: 320px;
+  background-image: url('/background-picture.jpeg');
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.08);
+  -webkit-mask-image: radial-gradient(
+    circle 150px at 50% 50%,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.95) 42%,
+    rgba(255, 255, 255, 0.7) 60%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    circle 150px at 50% 50%,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.95) 42%,
+    rgba(255, 255, 255, 0.7) 60%,
+    transparent 78%
+  );
+  opacity: 0.8;
+  pointer-events: none;
+}
+
 .hero-banner .hero-icon {
   display: flex;
   justify-content: center;
