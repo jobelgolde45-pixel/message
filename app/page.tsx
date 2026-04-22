@@ -149,6 +149,9 @@ export default function Home() {
   const heroCurrentRef = useRef({ x: 0, y: 0, radius: 0, glow: 0 });
   const heroTargetRef = useRef({ x: 0, y: 0, radius: 0, glow: 0 });
   const heroLastPointRef = useRef({ x: 0, y: 0 });
+  const [autoHeartPos, setAutoHeartPos] = useState({ x: 30, y: 40 });
+  const autoHeartAnimationRef = useRef<number | null>(null);
+  const autoHeartTargetRef = useRef({ x: 30, y: 40 });
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoaded(true), 100);
@@ -316,6 +319,76 @@ useEffect(() => {
     checkTouch();
   }, []);
 
+  useEffect(() => {
+    const banner = heroBannerRef.current;
+    if (!banner || typeof window === 'undefined') {
+      return;
+    }
+
+    const isSmallScreen = window.matchMedia('(max-width: 640px)').matches;
+    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
+    
+    if (!isSmallScreen || !hasTouch) {
+      return;
+    }
+
+    const setRevealVars = (x: number, y: number, radius: number, glow: number) => {
+      banner.style.setProperty('--reveal-x', `${x}px`);
+      banner.style.setProperty('--reveal-y', `${y}px`);
+      banner.style.setProperty('--reveal-size', `${radius}px`);
+      banner.style.setProperty('--reveal-glow', `${glow}`);
+    };
+
+    let currentX = 30;
+    let currentY = 40;
+    autoHeartTargetRef.current = { x: 30, y: 40 };
+    setIsHeroActive(true);
+
+    const getRandomPosition = () => {
+      const x = Math.random() * 70 + 15;
+      const y = Math.random() * 50 + 20;
+      return { x, y };
+    };
+
+    const animateAutoHeart = () => {
+      const target = autoHeartTargetRef.current;
+      currentX += (target.x - currentX) * 0.08;
+      currentY += (target.y - currentY) * 0.08;
+
+      setAutoHeartPos({ x: currentX, y: currentY });
+
+      const rect = banner.getBoundingClientRect();
+      const pixelX = (currentX / 100) * rect.width;
+      const pixelY = (currentY / 100) * rect.height;
+      const radius = 180 + Math.sin(Date.now() / 1000) * 30;
+      const glow = 0.28 + Math.sin(Date.now() / 800) * 0.08;
+      setRevealVars(pixelX, pixelY, radius, glow);
+
+      autoHeartAnimationRef.current = window.requestAnimationFrame(animateAutoHeart);
+    };
+
+    const scheduleNextMove = () => {
+      const newTarget = getRandomPosition();
+      autoHeartTargetRef.current = newTarget;
+    };
+
+    let moveInterval: NodeJS.Timeout;
+    const startAnimation = () => {
+      autoHeartAnimationRef.current = window.requestAnimationFrame(animateAutoHeart);
+      moveInterval = setInterval(scheduleNextMove, 2500);
+    };
+
+    startAnimation();
+
+    return () => {
+      if (autoHeartAnimationRef.current !== null) {
+        window.cancelAnimationFrame(autoHeartAnimationRef.current);
+        autoHeartAnimationRef.current = null;
+      }
+      clearInterval(moveInterval);
+    };
+  }, []);
+
   const handleHeartAnimationEnd = (id: number, type: 'cursor' | 'rising') => {
     if (type === 'cursor') {
       setCursorHearts(prev => prev.filter(h => h.id !== id));
@@ -396,13 +469,7 @@ Sana makita ko po ulit kayo.`,
         >
           <div className="hero-banner-reveal" aria-hidden="true" />
           <div className="hero-banner-glow" aria-hidden="true" />
-          {isTouchDevice && (
-            <>
-              <div className="auto-moving-heart" style={{ left: '30%', top: '40%', animationDelay: '0s' }} aria-hidden="true" />
-              <div className="auto-moving-heart" style={{ left: '70%', top: '35%', animationDelay: '2s' }} aria-hidden="true" />
-              <div className="auto-moving-heart" style={{ left: '50%', top: '65%', animationDelay: '4s' }} aria-hidden="true" />
-            </>
-          )}
+          <div className="hero-banner-bg-reveal" aria-hidden="true" />
           <div className="hero-icon">
             <Heart size={48} fill="#ff2e63" />
           </div>

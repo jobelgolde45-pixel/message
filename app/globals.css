@@ -201,20 +201,14 @@ body {
   transition:
     opacity 280ms ease,
     transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
-  -webkit-mask-image: radial-gradient(
-    circle var(--reveal-size) at var(--reveal-x) var(--reveal-y),
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.95) 42%,
-    rgba(255, 255, 255, 0.7) 60%,
-    transparent 78%
-  );
-  mask-image: radial-gradient(
-    circle var(--reveal-size) at var(--reveal-x) var(--reveal-y),
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.95) 42%,
-    rgba(255, 255, 255, 0.7) 60%,
-    transparent 78%
-  );
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 88 C20 60 0 45 0 30 C0 15 12 0 25 0 C32 0 38 5 50 18 C62 5 68 0 75 0 C88 0 100 15 100 30 C100 45 80 60 50 88Z' fill='white'/%3E%3C/svg%3E");
+  -webkit-mask-size: var(--reveal-size);
+  -webkit-mask-position: var(--reveal-x) var(--reveal-y);
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 88 C20 60 0 45 0 30 C0 15 12 0 25 0 C32 0 38 5 50 18 C62 5 68 0 75 0 C88 0 100 15 100 30 C100 45 80 60 50 88Z' fill='white'/%3E%3C/svg%3E");
+  mask-size: var(--reveal-size);
+  mask-position: var(--reveal-x) var(--reveal-y);
+  mask-repeat: no-repeat;
 }
 
 .hero-banner-glow {
@@ -262,75 +256,36 @@ body {
   }
 }
 
-.auto-moving-heart {
+.hero-banner-bg-reveal {
   position: absolute;
+  inset: 0;
   z-index: 0;
-  width: 280px;
-  height: 280px;
   background-image: url('/background-picture.jpeg');
   background-size: cover;
   background-position: center;
   opacity: 0;
-  transform: translate(-50%, -50%);
-  -webkit-mask-image: radial-gradient(
-    circle 130px at 50% 50%,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.95) 35%,
-    rgba(255, 255, 255, 0.7) 55%,
-    transparent 72%
-  );
-  mask-image: radial-gradient(
-    circle 130px at 50% 50%,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.95) 35%,
-    rgba(255, 255, 255, 0.7) 55%,
-    transparent 72%
-  );
   pointer-events: none;
-  animation: pulseReveal 6s ease-in-out infinite;
-  animation-fill-mode: forwards;
+  display: none;
+  transition: opacity 1.5s ease-in-out;
 }
 
-@keyframes pulseReveal {
-  0%, 10% {
+.hero-banner .hero-banner-bg-reveal {
+  animation: bgReveal 4s ease-in-out infinite;
+}
+
+@keyframes bgReveal {
+  0%, 100% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9);
   }
-  35%, 55% {
-    opacity: 0.88;
-    transform: translate(-50%, -50%) scale(1.15);
-  }
-  75%, 100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1);
+  50% {
+    opacity: 0.85;
   }
 }
 
-.auto-reveal-heart-mask {
-  position: absolute;
-  width: 380px;
-  height: 380px;
-  transform: translate(-50%, -50%);
-  background-image: url('/background-picture.jpeg');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.95;
-  -webkit-mask-image: radial-gradient(
-    circle 180px at 50% 50%,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.98) 40%,
-    rgba(255, 255, 255, 0.75) 65%,
-    transparent 80%
-  );
-  mask-image: radial-gradient(
-    circle 180px at 50% 50%,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.98) 40%,
-    rgba(255, 255, 255, 0.75) 65%,
-    transparent 80%
-  );
-  pointer-events: none;
-  z-index: 0;
+@media (max-width: 640px) {
+  .hero-banner-bg-reveal {
+    display: block;
+  }
 }
 
 .floating-heart {
