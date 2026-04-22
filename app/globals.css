@@ -973,6 +973,20 @@ footer.animate-in {
 
 /* Responsive adjustments */
 @media (max-width: 640px) {
+  .hero-banner {
+    background-image: linear-gradient(180deg, rgba(255, 182, 193, 0.45), rgba(255, 255, 255, 0.1)), url('/background-picture.jpeg');
+    background-size: cover, 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 32px 16px;
+    min-height: 20rem;
+  }
+
+  .hero-banner-reveal,
+  .hero-banner-glow {
+    display: none !important;
+  }
+  
   header {
     padding: 24px 16px 16px;
   }
